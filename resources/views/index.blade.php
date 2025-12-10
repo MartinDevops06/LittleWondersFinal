@@ -1,3 +1,8 @@
+<?php 
+  session_start();
+  $usuario=$_SESSION['username'] ?? false;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,14 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Little Wonders | Maternidad y Amor</title>
 
-    <!-- Si NO usas Vite, activa Tailwind por CDN -->
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Alpine.js (NECESARIO PARA LOS DROPDOWNS) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        /* Paleta suave para maternidad */
-        .bg-brand { background-color: #fce7f3; } /* Rosa suave */
+        .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
         .btn-primary { background-color: #db2777; color: white; }
         .btn-primary:hover { background-color: #be185d; }
@@ -21,14 +29,16 @@
 
 <body class="bg-gray-50 font-sans">
 
-    <!-- HEADER (Basado en tu foto de referencia) -->
+    <!-- HEADER -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            
+            <!-- Logo -->
             <a href="{{ route('home') }}" class="text-2xl font-bold text-brand flex items-center gap-2">
                 <i class="fa-solid fa-baby-carriage"></i> Little Wonders
             </a>
             
-
+            <!-- Buscador -->
             <div class="hidden md:flex flex-1 mx-10">
                 <form action="{{ route('productos.index') }}" method="GET" class="w-full relative">
                     <input type="text" name="search" value="{{ request('search') }}" 
@@ -40,40 +50,137 @@
                 </form>
             </div>
 
-            <div class="bg-white">
-                <div class="container mx-auto px-4 py-3 overflow-x-auto whitespace-nowrap">
-                    <a href="{{ route('home') }}" class="inline-block px-4 py-1 text-gray-600 hover:text-brand text-sm font-medium">Home</a>
-                    <a href="?category=ropa" class="inline-block px-4 py-1 text-gray-600 hover:text-brand text-sm font-medium">Bebes</a>
-                    <a href="?category=juguetes" class="inline-block px-4 py-1 text-gray-600 hover:text-brand text-sm font-medium">Juguetes y Estimulacion</a>
-                    <a href="?category=lactancia" class="inline-block px-4 py-1 text-gray-600 hover:text-brand text-sm font-medium">Madres</a>
+            <!-- Menú -->
+            <div class="flex gap-6 items-center">
+
+                <a href="{{ route('home') }}" class="text-gray-600 hover:text-brand text-sm font-medium">
+                    Home
+                </a>
+
+                <!-- Bebe -->
+                <div 
+                    x-data="{ open:false, timer:null }"
+                    @mouseenter="clearTimeout(timer); open = true"
+                    @mouseleave="timer = setTimeout(() => open = false, 400)"
+                    class="relative"
+                >
+                    <a href="{{ route('bebes.index') }}" 
+                    class="text-gray-600 hover:text-brand text-sm font-medium">
+                        Bebés
+                    </a>
+
+                    <div 
+                        x-show="open"
+                        x-transition
+                        class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50"
+                    >
+                        <a href="{{ route('bebes.index') }}#ropa-bebe" class="block px-4 py-2 hover:bg-gray-100">
+                            Ropa Bebé
+                        </a>
+
+                        <a href="{{ route('bebes.index') }}#alimentacion" class="block px-4 py-2 hover:bg-gray-100">
+                            Alimentación
+                        </a>
+
+                        <a href="{{ route('bebes.index') }}#higiene" class="block px-4 py-2 hover:bg-gray-100">
+                            Higiene
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Juguetes -->
+                <div 
+                    x-data="{ open:false, timer:null }"
+                    @mouseenter="clearTimeout(timer); open = true"
+                    @mouseleave="timer = setTimeout(() => open = false, 400)"
+                    class="relative"
+                >
+                    <a href="{{ route('juguetes.index') }}" 
+                    class="text-gray-600 hover:text-brand text-sm font-medium">
+                        Juguetes
+                    </a>
+
+                    <div 
+                        x-show="open"
+                        x-transition
+                        class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50"
+                    >
+                        <a href="{{ route('juguetes.index') }}#estimulación" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Estimulación
+                        </a>
+
+                        <a href="{{ route('juguetes.index') }}#motricidad" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Motricidad
+                        </a>
+
+                        <a href="{{ route('juguetes.index') }}#entretenimiento" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Entretenimiento
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Madres -->
+ <div 
+                    x-data="{ open:false, timer:null }"
+                    @mouseenter="clearTimeout(timer); open = true"
+                    @mouseleave="timer = setTimeout(() => open = false, 400)"
+                    class="relative"
+                >
+                    <a href="{{ route('madres.index') }}" 
+                    class="text-gray-600 hover:text-brand text-sm font-medium">
+                        Madres
+                    </a>
+
+                    <div 
+                        x-show="open"
+                        x-transition
+                        class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50"
+                    >
+                        <a href="{{ route('madres.index') }}#confort" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Confort
+                        </a>
+
+                        <a href="{{ route('madres.index') }}#salud" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Salud
+                        </a>
+
+                        <a href="{{ route('madres.index') }}#vestimenta" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            Vestimenta
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
-                {{-- Enlace al carrito de compras --}}
+                <!-- Carrito -->
                 <a href="{{ route('carrito.mostrar') }}" class="relative text-gray-600 hover:text-brand transition">
                     <i class="fa-solid fa-cart-shopping text-xl"></i>
-
-                    {{-- Cantidad de productos --}}
                     <span class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                         {{ count(Session::get('carrito', [])) }}
                     </span>
                 </a>
 
-                {{-- Icono de usuario --}}
+                <!-- Usuario -->
                 <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
-                    <i class="fa-solid fa-user text-xl"></i>
+                    @if ($usuario)
+                      <p>{{ $_SESSION['username'] }}</p>
+                    @else
+                      <i class="fa-solid fa-user text-xl"></i>
+                    @endif
                 </a>
             </div>
         </div>
     </nav>
 
-
-    <!-- HERO PRINCIPAL -->
+    <!-- HERO -->
     <section class="bg-white border-b py-12">
         <div class="container mx-auto flex flex-col md:flex-row items-center">
-
-            <!-- Texto CTA -->
             <div class="w-full md:w-1/2 px-6 flex flex-col items-center text-center">
                 <h1 class="text-4xl font-bold text-pink-600 leading-tight">
                     Bienvenida a Little Wonders
@@ -89,8 +196,6 @@
                 </a>
             </div>
 
-
-            <!-- Imagen principal -->
             <div class="w-full md:w-1/2 mt-10 md:mt-0 px-6">
                 <img src="{{ asset('storage/FotosPromocionales/LlamadoAccionIndex.png') }}"
                     alt="Mamá con su bebé"
@@ -99,7 +204,7 @@
         </div>
     </section>
 
-    <!-- RECOMENDACIONES -->
+    <!-- RECOMENDADOS -->
     <section class="py-14 bg-gray-200">
         <div class="container mx-auto px-6">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">

@@ -1,33 +1,35 @@
 <?php 
-  session_start();
-  $usuario=$_SESSION['username'] ?? false;
+    session_start();
+    $usuario = $_SESSION['username'] ?? false;
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Little Wonders | Maternidad y Amor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Paleta suave para maternidad */
-        .bg-brand { background-color: #fce7f3; } /* Rosa suave */
-        .text-brand { color: #db2777; }
-        .btn-primary { background-color: #db2777; color: white; }
-        .btn-primary:hover { background-color: #be185d; }
-    </style>
-    <!-- Tailwind CDN -->
+    <title>Bebés | Little Wonders</title>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Alpine.js (NECESARIO PARA LOS DROPDOWNS) -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        .bg-brand { background-color: #fce7f3; }
+        .text-brand { color: #db2777; }
+        .btn-primary { background-color: #db2777; color: white; }
+        .btn-primary:hover { background-color: #be185d; }
+        html { scroll-behavior: smooth; }
+    </style>
 </head>
+
 <body class="bg-gray-50 font-sans">
 
+    <!-- NAVBAR -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             
@@ -48,14 +50,14 @@
                 </form>
             </div>
 
-            <!-- Menú -->
+            <!-- MENÚ SUPERIOR -->
             <div class="flex gap-6 items-center">
 
                 <a href="{{ route('home') }}" class="text-gray-600 hover:text-brand text-sm font-medium">
                     Home
                 </a>
 
-                <!-- bebe -->
+                <!-- BEBÉS (Hover con delay) -->
                 <div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
@@ -121,7 +123,7 @@
                 </div>
 
                 <!-- Madres -->
-                <div 
+              <div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
                     @mouseleave="timer = setTimeout(() => open = false, 400)"
@@ -153,9 +155,13 @@
                         </a>
                     </div>
                 </div>
+
+                </div>
             </div>
 
+            <!-- ICONOS DERECHA -->
             <div class="flex items-center gap-4">
+
                 <!-- Carrito -->
                 <a href="{{ route('carrito.mostrar') }}" class="relative text-gray-600 hover:text-brand transition">
                     <i class="fa-solid fa-cart-shopping text-xl"></i>
@@ -167,80 +173,54 @@
                 <!-- Usuario -->
                 <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
                     @if ($usuario)
-                      <p>{{ $_SESSION['username'] }}</p>
+                        <p>{{ $_SESSION['username'] }}</p>
                     @else
-                      <i class="fa-solid fa-user text-xl"></i>
+                        <i class="fa-solid fa-user text-xl"></i>
                     @endif
                 </a>
+
             </div>
         </div>
     </nav>
 
-    
-
-    <main class="container mx-auto px-4 py-8">
-        
-        @if(request('search'))
-            <h2 class="text-xl text-gray-700 mb-6">Resultados para: <span class="font-bold">"{{ request('search') }}"</span></h2>
-        @endif
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @forelse($productos as $producto)
-            <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition duration-300 overflow-hidden group border border-gray-100">
-                <div class="relative h-64 overflow-hidden bg-gray-100">
-                    <img src="data:image/jpeg;base64,{{ $producto->foto }}" alt="Producto" 
-                        class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500">
-                    @if($producto->stock)
-                        @php
-                            $status = $producto->stock->stock_status;
-                            $quantity = $producto->stock->quantity;
-                        @endphp
-                        
-                        @if($status == 'Disponible')
-                            <span class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
-                                <i class="fa-solid fa-check-circle"></i> 
-                                {{ $status }} ({{ $quantity }})
-                            </span>
-                        @elseif($status == 'Bajo Stock')
-                            <span class="absolute top-2 left-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded">
-                                <i class="fa-solid fa-exclamation-triangle"></i>
-                                {{ $status }} ({{ $quantity }})
-                            </span>
-                        @else
-                            <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                                <i class="fa-solid fa-times-circle"></i>
-                                {{ $status }}
-                            </span>
-                        @endif
-                    @else
-                        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">No disponible</span>
-                    @endif
-                </div>
-
-                <div class="p-4">
-                    <p class="text-lg font-medium text-gray-800 truncate">{{ $producto->nombre }}</p>
-                    <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ $producto->descripcion }}</p>
-                    
-                    <div class="mt-4 flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-900">${{ number_format($producto->precio, 0, ',', '.') }}</span>
-                        <a href="{{ route('productos.show', $producto->id) }}" class="text-brand text-sm font-medium hover:underline">
-                            Ver detalle
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @empty
-            <div class="col-span-full text-center py-20">
-                <i class="fa-regular fa-face-sad-tear text-4xl text-gray-300 mb-4"></i>
-                <p class="text-gray-500">No encontramos productos con esa descripción.</p>
-                <a href="{{ route('productos.index') }}" class="text-brand font-bold mt-2 inline-block">Ver todo el catálogo</a>
-            </div>
-            @endforelse
+    <!-- HERO -->
+    <section class="bg-white border-b py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold text-pink-600">Categorías Bebés</h1>
+            <p class="text-gray-600 mt-3 text-lg">Todo lo que tu bebé necesita, organizado por secciones</p>
         </div>
+    </section>
 
-        <div class="mt-8">
-            {{ $productos->links() }}
-        </div>
+    <!-- CONTENIDO -->
+    <main class="container mx-auto px-6 py-10">
+
+        <!-- ========================== -->
+        <!-- 🔹 ROPA BEBÉ -->
+        <!-- ========================== -->
+        <section id="ropa-bebe" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Ropa Bebé</h2>
+
+            @include('bebes.secciones.ropa-bebe')
+        </section>
+
+        <!-- ========================== -->
+        <!-- 🔹 ALIMENTACIÓN -->
+        <!-- ========================== -->
+        <section id="alimentacion" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Alimentación</h2>
+
+            @include('bebes.secciones.alimentacion')
+        </section>
+
+        <!-- ========================== -->
+        <!-- 🔹 HIGIENE -->
+        <!-- ========================== -->
+        <section id="higiene" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Higiene</h2>
+
+            @include('bebes.secciones.higiene')
+        </section>
+
     </main>
 
     <footer class="bg-white border-t mt-12 py-8 text-center text-gray-500 text-sm">

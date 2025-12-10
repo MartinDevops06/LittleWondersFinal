@@ -20,6 +20,17 @@ use App\Http\Controllers\AddressController;
     Route::controller(ProductoController::class)->group(function () {
         Route::get('producto/', 'index')->name('productos.index');
         Route::get('/producto/{id}', 'show')->name('productos.show');
+        Route::get('/bebes', function () {
+            return view('bebes.index');
+        })->name('bebes.index');
+        Route::get('/juguetes', function () {
+            return view('juguetes.index');
+        })->name('juguetes.index');
+        Route::get('/madres', function () {
+            return view('madres.index');
+        })->name('madres.index');
+
+
     });
 
 

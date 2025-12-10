@@ -11,6 +11,8 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        session_start();
+
         // 1️⃣ Validación de campos
         $request->validate([
             'email' => 'required|email',
@@ -34,6 +36,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         // 5️⃣ Redirigir
+        $_SESSION['username']=$request->email;
         return redirect()->route('home');
     }
 }
