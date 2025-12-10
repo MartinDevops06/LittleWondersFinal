@@ -53,11 +53,16 @@
                 {{-- Enlace al carrito de compras --}}
                 <a href="{{ route('carrito.mostrar') }}" class="relative text-gray-600 hover:text-brand transition">
                     <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    {{-- Aquí se mostraría el número de artículos en el carrito.
-                        Necesitas pasar la cuenta de artículos a tu vista. Por ahora, asumimos una variable $conteoCarrito --}}
+
+                    {{-- Cantidad de productos --}}
                     <span class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                         {{ count(Session::get('carrito', [])) }}
                     </span>
+                </a>
+
+                {{-- Icono de usuario --}}
+                <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
+                    <i class="fa-solid fa-user text-xl"></i>
                 </a>
             </div>
         </div>
