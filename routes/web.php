@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CheckoutController;
+use App\Models\Order;
 
 
     /*
@@ -66,8 +68,8 @@ use App\Http\Controllers\AddressController;
 
 
 
-Route::get('/user/address', [AddressController::class, 'index'])->name('address');
-Route::post('/direccion', [AddressController::class, 'store'])->name('address.store');
+    Route::get('/user/address', [AddressController::class, 'index'])->name('address');
+    Route::post('/direccion', [AddressController::class, 'store'])->name('address.store');
 
     /*
     |--------------------------------------------------------------------------
@@ -75,3 +77,17 @@ Route::post('/direccion', [AddressController::class, 'store'])->name('address.st
     |--------------------------------------------------------------------------
     */
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Chechout y Pay
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Comprobante de orden
+    Route::get('/order/success/{id}', function($id) {
+        $order = Order::findOrFail($id);
+        return view('CheckoutPay.success', compact('order'));
+    })->name('orders.success');

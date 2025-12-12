@@ -70,30 +70,27 @@ class CarritoController extends Controller
      */
     public function actualizar(Request $request, $idProducto)
     {
-        // Valida que la cantidad sea un número entero positivo.
         $request->validate([
             'cantidad' => 'required|integer|min:1'
         ]);
 
         $carrito = Session::get('carrito', []);
-        $cantidad = $request->input('cantidad');
 
-        if (isset($carrito[$idProducto])) {
-            if ($cantidad > 0) {
-                // Actualiza la cantidad
-                $carrito[$idProducto]['cantidad'] = $cantidad;
-                Session::put('carrito', $carrito);
-                $mensaje = 'Cantidad del producto actualizada.';
-            } else {
-                // Si la cantidad es 0 o menos, elimina el artículo
-                unset($carrito[$idProducto]);
-                Session::put('carrito', $carrito);
-                $mensaje = 'Producto eliminado del carrito.';
-            }
+        if (!isset($carrito[$idProducto])) {
+            return response()->json([
+                'error' => 'El producto no está en el carrito.'
+            ], 404);
         }
 
-        return redirect()->route('carrito.mostrar')->with('mensaje', $mensaje);
+        $carrito[$idProducto]['cantidad'] = $request->cantidad;
+        Session::put('carrito', $carrito);
+
+        return response()->json([
+            'mensaje' => 'Cantidad actualizada.',
+            'subtotal' => $this->calcularSubtotal($carrito)
+        ]);
     }
+
 
     /**
      * Elimina un producto del carrito.
@@ -107,6 +104,17 @@ class CarritoController extends Controller
             Session::put('carrito', $carrito);
         }
 
-        return redirect()->route('carrito.mostrar')->with('mensaje', 'Producto eliminado del carrito.');
+        return response()->json([
+            'mensaje' => 'Producto eliminado.',
+            'subtotal' => $this->calcularSubtotal($carrito)
+        ]);
+    }
+
+
+    private function calcularSubtotal($carrito)
+    {
+        return collect($carrito)->sum(function ($item) {
+            return $item['precio'] * $item['cantidad'];
+        });
     }
 }

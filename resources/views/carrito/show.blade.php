@@ -111,7 +111,7 @@
                             {{-- PRODUCTO --}}
                             <td class="py-4">
                                 <div class="flex items-start gap-4">
-                                    <img src="{{ asset('storage/FotoProductos/' . $articulo['foto']) }}" 
+                                    <img src="{{ asset('storage/ImagenesProductos/' . $articulo['foto']) }}" 
                                         alt="{{ $articulo['nombre'] }}" 
                                         class="w-16 h-16 object-cover rounded-md border border-gray-100">
 
@@ -155,73 +155,6 @@
                             <input type="hidden" id="precio-{{ $articulo['id'] }}" value="{{ $articulo['precio'] }}">
 
                         </tr>
-
-                        {{-- SCRIPT PARA ESTA FILA --}}
-                        <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-
-                            const id = "{{ $articulo['id'] }}";
-                            const inputCantidad = document.getElementById(`cantidad-${id}`);
-                            const precio = parseInt(document.getElementById(`precio-${id}`).value);
-                            const filaTotal = document.getElementById(`total-fila-${id}`);
-
-                            const btnMas = inputCantidad.parentElement.querySelector(".increment");
-                            const btnMenos = inputCantidad.parentElement.querySelector(".decrement");
-
-                            function formatearNumero(num) {
-                                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                            }
-
-                            function actualizarCantidad(nuevaCantidad) {
-                                fetch("{{ route('carrito.actualizar', $articulo['id']) }}", {
-                                    method: "PATCH",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({ cantidad: nuevaCantidad })
-                                }).then(() => {
-                                    recalcularSubtotal();
-                                });
-                            }
-
-                            function actualizarFila(cantidad) {
-                                const total = cantidad * precio;
-                                filaTotal.textContent = "$" + formatearNumero(total);
-                            }
-
-                            function recalcularSubtotal() {
-                                let subtotal = 0;
-
-                                document.querySelectorAll("[id^='cantidad-']").forEach(input => {
-                                    const id = input.id.split("-")[1];
-                                    const cant = parseInt(input.value);
-                                    const precio = parseInt(document.getElementById(`precio-${id}`).value);
-                                    subtotal += cant * precio;
-                                });
-
-                                document.getElementById("subtotal").textContent = "$" + formatearNumero(subtotal);
-                            }
-
-                            btnMas.addEventListener("click", () => {
-                                const nueva = parseInt(inputCantidad.value) + 1;
-                                inputCantidad.value = nueva;
-                                actualizarFila(nueva);
-                                actualizarCantidad(nueva);
-                            });
-
-                            btnMenos.addEventListener("click", () => {
-                                const actual = parseInt(inputCantidad.value);
-                                if (actual > 1) {
-                                    const nueva = actual - 1;
-                                    inputCantidad.value = nueva;
-                                    actualizarFila(nueva);
-                                    actualizarCantidad(nueva);
-                                }
-                            });
-                        });
-                        </script>
-
                     @endforeach
                     </tbody>
                 </table>
@@ -240,8 +173,11 @@
 
                 {{-- ACCIONES --}}
                 <div class="flex flex-col gap-3 mt-6">
-                    <button class="btn-primary w-full py-3 rounded-full font-semibold uppercase tracking-wider shadow-lg shadow-pink-200">
-                        IR A PAGAR
+                    <a href="{{ route('checkout.index') }}">
+                        <button class="btn-primary w-full py-3 rounded-full font-semibold uppercase tracking-wider shadow-lg shadow-pink-200">
+                            IR A PAGAR
+                        </button>
+                    </a>
                     </button>
 
                     <a href="{{ route('home') }}" class="text-center">
@@ -258,6 +194,65 @@
     <footer class="bg-white border-t mt-12 py-8 text-center text-gray-500 text-sm">
         <p>&copy; {{ date('Y') }} Little Wonders. Hecho con amor.</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            function formatear(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
+
+            // Delegación de eventos (un solo listener para todos)
+            document.body.addEventListener("click", async (e) => {
+
+                // BOTÓN +
+                if (e.target.closest(".increment")) {
+                    const row = e.target.closest("tr");
+                    actualizarCantidad(row, +1);
+                }
+
+                // BOTÓN -
+                if (e.target.closest(".decrement")) {
+                    const row = e.target.closest("tr");
+                    actualizarCantidad(row, -1);
+                }
+            });
+
+            async function actualizarCantidad(row, cambio) {
+                const input = row.querySelector("input[id^='cantidad-']");
+                const id = input.id.split("-")[1];
+                const precio = parseInt(document.getElementById(`precio-${id}`).value);
+
+                let cantidad = parseInt(input.value) + cambio;
+                if (cantidad < 1) cantidad = 1;
+
+                input.value = cantidad;
+
+                // Actualiza total por fila
+                const totalFila = cantidad * precio;
+                document.getElementById(`total-fila-${id}`).textContent = "$" + formatear(totalFila);
+
+                // Envía actualización al servidor
+                const respuesta = await fetch(`/carrito/actualizar/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ cantidad })
+                });
+
+                const data = await respuesta.json();
+
+                // Actualiza subtotal
+                if (data.subtotal !== undefined) {
+                    document.getElementById("subtotal").textContent = "$" + formatear(data.subtotal);
+                }
+            }
+
+        });
+    </script>
+
 
 </body>
 </html>

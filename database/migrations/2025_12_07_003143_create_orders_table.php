@@ -12,16 +12,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('address_id')->constrained('addresses');
-            $table->enum('status', [
-                'Pending', 'Confirmed', 'Processing', 
-                'Shipped', 'Delivered', 'Cancelled'
-            ])->default('Pending');
+
+            // Cambiamos ENUM por STRING
+            $table->string('status')->default('Pending');
+            $table->string('payment_method'); // 'Card' o 'Cash'
+
             $table->decimal('subtotal', 10, 2);
             $table->decimal('tax', 10, 2);
             $table->decimal('total', 10, 2);
-            $table->enum('payment_method', ['Card', 'Cash']);
+
             $table->timestamps();
-            
+
             $table->index('user_id', 'fk_order_user_idx');
             $table->index('address_id', 'fk_order_address1_idx');
         });
