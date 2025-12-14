@@ -97,13 +97,33 @@ use App\Http\Controllers\MadresController;
     | Autenticacion de Usuario
     |--------------------------------------------------------------------------
     */
+    Route::get('/user', [UserController::class, 'index'])->name('User'); 
 
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+// POST para procesar el inicio de sesión (Resuelve Error 1)
+    Route::post('/login', [UserController::class, 'login'])->name('login'); 
 
-    Route::get('/login', function () {
-        return redirect()->route('User');
+    // GET para mostrar el formulario de registro
+    Route::get('/register', [UserController::class, 'create'])->name('user.create');
+
+    // POST para procesar el registro (Resuelve Error 2, usando 'user.store')
+    Route::post('/register', [UserController::class, 'store'])->name('user.store');
+
+
+    // RUTAS AUTENTICADAS
+    Route::middleware('auth')->group(function () {
+        // POST para cerrar sesión
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout'); 
+        
+        // RUTA PARA VER EL PERFIL
+        Route::get('/profile/{user}', [UserController::class, 'show'])->name('User.show'); 
+        
+        // RUTA PARA EDITAR EL PERFIL
+        Route::get('/profile/{user}/edit', [UserController::class, 'edit'])->name('User.edit');
+        Route::put('/profile/{user}', [UserController::class, 'update'])->name('User.update');
     });
 
+    // Además, tu ruta 'address' debe estar definida para que funcione el store de registro:
+    Route::get('/address-setup', [AddressController::class, 'index'])->name('address');
 
 
     /*

@@ -185,6 +185,12 @@
                             x-transition
                             class="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-md z-50"
                         >
+                            <a 
+                                href="{{ route('User.show', Auth::id()) }}" 
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                <i class="fa-solid fa-eye mr-2"></i> Ver Perfil
+                            </a>
                             <!-- Editar datos -->
                             <a 
                                 href="{{ route('User.edit', Auth::id()) }}"

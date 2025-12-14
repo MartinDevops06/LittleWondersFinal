@@ -164,13 +164,57 @@
                 </a>
 
                 <!-- Usuario -->
-                <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
+                <div class="relative" x-data="{ open: false }">
                     @auth
-                        <p>{{ Auth::user()->name }}</p>
+                        <!-- Botón usuario -->
+                        <button 
+                            @click="open = !open"
+                            class="flex items-center gap-2 text-gray-600 hover:text-brand transition focus:outline-none"
+                        >
+                            <i class="fa-solid fa-user"></i>
+                            <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div 
+                            x-show="open"
+                            @click.outside="open = false"
+                            x-transition
+                            class="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-md z-50"
+                        >
+                            <a 
+                                href="{{ route('User.show', Auth::id()) }}" 
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                <i class="fa-solid fa-eye mr-2"></i> Ver Perfil
+                            </a>
+                            <!-- Editar datos -->
+                            <a 
+                                href="{{ route('User.edit', Auth::id()) }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                <i class="fa-solid fa-pen mr-2"></i> Editar datos
+                            </a>
+
+                            <!-- Cerrar sesión -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button 
+                                    type="submit"
+                                    class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                >
+                                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión
+                                </button>
+                            </form>
+                        </div>
                     @else
-                        <i class="fa-solid fa-user text-xl"></i>
+                        <!-- Usuario no autenticado -->
+                        <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
+                            <i class="fa-solid fa-user text-xl"></i>
+                        </a>
                     @endauth
-                </a>
+                </div>
             </div>
         </div>
     </nav>
