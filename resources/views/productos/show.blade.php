@@ -26,7 +26,7 @@
                 <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
             </a>
 
-            <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition flex items-center gap-2">
+            <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition flex items-center gap-2">
                 @auth
                     <p>{{ Auth::user()->name }}</p>
                 @else

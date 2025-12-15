@@ -48,7 +48,7 @@
         </div>
 
         <form method="POST"
-              action="{{ isset($user) ? route('User.update', $user->id) : route('user.store') }}">
+              action="{{ isset($user) ? route('User.update', $user->id) : route('register.store') }}">
             @csrf
             @isset($user)
                 @method('PUT')

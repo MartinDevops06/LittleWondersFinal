@@ -39,13 +39,15 @@
                 </a>
             </div>
 
-            <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
-                @auth
+            @auth
+                <a href="{{ route('User.show') }}" class="text-gray-600 hover:text-brand transition">
                     <p>{{ Auth::user()->name }}</p>
-                @else
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition">
                     <i class="fa-solid fa-user text-xl"></i>
-                @endauth
-            </a>
+                </a>
+            @endauth
 
 
         </div>
@@ -66,53 +68,46 @@
             <form action="{{ route('address.store') }}" method="POST">
                 @csrf
 
-                <!-- Campos requeridos por el modelo y la validación -->
-                <label class="block mb-2 text-gray-600 font-medium">Nombre de Contacto</label>
-                <input type="text" name="contact_name" required value="{{ old('contact_name') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                <!-- Agregar manejo de errores como se explicó anteriormente -->
-                @error('contact_name') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
+                {{-- REDIRECT (MUY IMPORTANTE) --}}
+                @if(isset($redirect))
+                    <input type="hidden" name="redirect" value="{{ $redirect }}">
+                @endif
 
-
-                <label class="block mb-2 text-gray-600 font-medium">Teléfono de Contacto</label>
-                <input type="text" name="contact_phone" required value="{{ old('contact_phone') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                @error('contact_phone') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
-
-
-                <!-- Campos que ya tenías -->
-                <label class="block mb-2 text-gray-600 font-medium">Ciudad</label>
-                <input type="text" name="city" required value="{{ old('city') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                @error('city') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
-
-
-                <label class="block mb-2 text-gray-600 font-medium">Departamento</label>
-                <!-- NOTA: Cambié el name="country" de tu HTML original a name="department" para que coincida con tu modelo Address -->
-                <input type="text" name="department" required value="{{ old('department') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                @error('department') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
-
-
-                <label class="block mb-2 text-gray-600 font-medium">Dirección</label>
-                <input type="text" name="address" required value="{{ old('address') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                @error('address') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
-
-                
-                <label class="block mb-2 text-gray-600 font-medium">Referencia (Opcional)</label>
-                <input type="text" name="reference" value="{{ old('reference') }}"
-                    class="w-full px-4 py-2 mb-4 border rounded-lg bg-gray-50 focus:outline-none focus:border-pink-400">
-                @error('reference') <p class="text-red-500 text-xs mt-1 mb-4">{{ $message }}</p> @enderror
-
-
-                <div class="text-center mt-4">
-                    <!-- El botón debe ser type="submit" para enviar el formulario -->
-                    <button type="submit" class="w-full btn-primary py-2 rounded-full text-lg">
-                        Guardar Dirección
-                    </button>
+                {{-- NOMBRE DE CONTACTO --}}
+                <div class="mb-4">
+                    <label class="block mb-1">Nombre de contacto</label>
+                    <input type="text" name="contact_name" class="w-full border p-2" required>
                 </div>
+
+                {{-- TELÉFONO --}}
+                <div class="mb-4">
+                    <label class="block mb-1">Teléfono</label>
+                    <input type="text" name="contact_phone" class="w-full border p-2" required>
+                </div>
+
+                {{-- CIUDAD --}}
+                <div class="mb-4">
+                    <label class="block mb-1">Ciudad</label>
+                    <input type="text" name="city" class="w-full border p-2" required>
+                </div>
+
+                {{-- DEPARTAMENTO --}}
+                <div class="mb-4">
+                    <label class="block mb-1">Departamento</label>
+                    <input type="text" name="department" class="w-full border p-2" required>
+                </div>
+
+                {{-- DIRECCIÓN --}}
+                <div class="mb-4">
+                    <label class="block mb-1">Dirección</label>
+                    <input type="text" name="address" class="w-full border p-2" required>
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-3 rounded-full font-semibold uppercase tracking-wider shadow-lg shadow-pink-200">
+                    Guardar dirección
+                </button>
             </form>
+
         </div>
     </div>
 

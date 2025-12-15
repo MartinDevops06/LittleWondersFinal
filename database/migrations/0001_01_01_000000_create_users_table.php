@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('last_name', 80);
             $table->string('email', 255)->unique();
             $table->string('password', 255);
-            $table->string('phone', 15);
+            $table->string('phone', 20);
             $table->date('birth_date');
             $table->boolean('is_admin')->default(false);
             $table->timestamps();

@@ -6,6 +6,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Alpine.js (NECESARIO PARA LOS DROPDOWNS) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <style>
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
@@ -35,16 +38,57 @@
                 <i class="fa-solid fa-baby-carriage"></i> Little Wonders
             </a>
 
-            <!-- DERECHA -->
-            <a href="{{ route('User') }}" 
-            class="text-gray-600 hover:text-brand transition flex items-center gap-2 z-20">
+            <div class="relative" x-data="{ open: false }">
                 @auth
-                    <p>{{ Auth::user()->name }}</p>
-                @else
-                    <i class="fa-solid fa-user text-xl"></i>
-                @endauth
-            </a>
+                    <!-- Botón usuario -->
+                    <button 
+                        @click="open = !open"
+                        class="flex items-center gap-2 text-gray-600 hover:text-brand transition focus:outline-none"
+                    >
+                        <i class="fa-solid fa-user"></i>
+                        <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
 
+                    <!-- Dropdown -->
+                    <div 
+                        x-show="open"
+                        @click.outside="open = false"
+                        x-transition
+                        class="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-md z-50"
+                    >
+                        <a 
+                            href="{{ route('User.show', Auth::id()) }}" 
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                            <i class="fa-solid fa-eye mr-2"></i> Ver Perfil
+                        </a>
+                        <!-- Editar datos -->
+                        <a 
+                            href="{{ route('User.edit', Auth::id()) }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                            <i class="fa-solid fa-pen mr-2"></i> Editar datos
+                        </a>
+
+                        <!-- Cerrar sesión -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button 
+                                type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                            >
+                                <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <!-- Usuario no autenticado -->
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition">
+                        <i class="fa-solid fa-user text-xl"></i>
+                    </a>
+                @endauth
+            </div>
         </div>
 </nav>
 
@@ -178,7 +222,6 @@
                             IR A PAGAR
                         </button>
                     </a>
-                    </button>
 
                     <a href="{{ route('home') }}" class="text-center">
                         <button class="btn-secondary w-full py-3 rounded-full font-semibold uppercase tracking-wider hover:shadow">

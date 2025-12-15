@@ -229,6 +229,141 @@ class ProductosSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
+            [
+                'category_id' => 2,
+                'nombre' => 'Conjunto Body + Vestido Rosado para Bebé',
+                'descripcion' => 'Conjunto delicado con body y vestido rosado ideal para eventos o uso diario con estilo dulce.',
+                'precio' => 99900,
+                'foto' => 'image45.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Pequeñin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Sets Saco con Capucha + Body + Pantalón Jogger',
+                'descripcion' => 'Set práctico con saco con capucha, body y jogger perfecto para salida y paseo.',
+                'precio' => 62990,
+                'foto' => 'image46.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Pequeñin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Set Ocasión Especial Body y Pantalón Recién Nacido',
+                'descripcion' => 'Set elegante de body con pantalón para recién nacido – perfecto como regalo o primera muda. ',
+                'precio' => 139990 ,
+                'foto' => 'image48.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Pequeñin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Set bebé 6‑en‑1 Hudson Baby',
+                'descripcion' => 'Set completo para recién nacido o bebé de hasta 6-9 meses con 6 piezas variadas (bodys, pantaloncitos y más), ideal para mudas del día a día o regalo de baby shower.',
+                'precio' => 169915 ,
+                'foto' => 'image49.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Hudson Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Conjunto body + bermuda bebé ',
+                'descripcion' => 'Conjunto cómodo de body con bermuda para bebé niño, perfecto para clima cálido y uso diario; fácil de poner y quitar.',
+                'precio' => 99990 ,
+                'foto' => 'image50.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Hudson Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Conjunto blusa rosa + short bebé ',
+                'descripcion' => 'Conjunto dulce de blusa rosa con estampado floral y short en lino para bebé niña, ideal para salidas casuales.',
+                'precio' => 99990 ,
+                'foto' => 'image56.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Hudson Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'SET 14PZS',
+                'descripcion' => 'Set de 14 piezas básicas de ropa para bebé (bodys, pijamas y prendas esenciales), ideal como paquete completo para uso diario y mudas frecuentes.',
+                'precio' => 74990 ,
+                'foto' => 'image57.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Creciendo Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Conjunto bebé niña body + vestido algodón ',
+                'descripcion' => 'Conjunto dulce que incluye body con vestido de algodón suave, cómodo y perfecto para salidas casuales o eventos especiales',
+                'precio' => 99990 ,
+                'foto' => 'image58.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Creciendo Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'category_id' => 2,
+                'nombre' => 'Conjunto bebé tejido carita unisex',
+                'descripcion' => 'Conjunto tejido unisex con diseño de carita, ideal para climas frescos o días de paseo.',
+                'precio' => 178000 ,
+                'foto' => 'image59.jpg',
+                'classification' => 'Ropa',
+                'gallery_images' => json_encode([
+                    'set_ropa_bebe_1.jpg'
+                ]),
+                'brand' => 'Creciendo Baby',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
             // JUGUETERÍA Y ESTIMULACIÓN
 
             [

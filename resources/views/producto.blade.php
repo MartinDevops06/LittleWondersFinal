@@ -210,7 +210,7 @@
                         </div>
                     @else
                         <!-- Usuario no autenticado -->
-                        <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
+                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition">
                             <i class="fa-solid fa-user text-xl"></i>
                         </a>
                     @endauth

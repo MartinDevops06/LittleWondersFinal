@@ -35,7 +35,7 @@
             </a>
 
             <!-- DERECHA -->
-            <a href="{{ route('User') }}" 
+            <a href="{{ route('login') }}" 
             class="text-gray-600 hover:text-brand transition flex items-center gap-2 z-20">
                 @auth
                     <p>{{ Auth::user()->name }}</p>
@@ -73,11 +73,7 @@
                 @csrf
 
                 {{-- DIRECCIÓN --}}
-                <div class="mb-6">
-                    <label class="block font-semibold text-gray-700 mb-2">
-                        Dirección de envío *
-                    </label>
-
+                <div class="flex gap-2 items-start">
                     {{-- SELECT DE DIRECCIONES --}}
                     <select id="direccion_select" name="direccion_select"
                         class="w-full border rounded-lg p-3 bg-gray-50 focus:outline-pink-300">
@@ -89,15 +85,15 @@
                                 {{ $dir->full_address }}
                             </option>
                         @endforeach
-
-                        <option value="nueva">➕ Agregar nueva dirección</option>
                     </select>
 
-                    {{-- INPUT NUEVA DIRECCIÓN (OCULTO AL INICIO) --}}
-                    <input type="text" name="direccion" id="direccion_input"
-                        class="w-full border rounded-lg p-3 focus:outline-pink-300 bg-gray-50 mt-3 hidden"
-                        placeholder="Ingresa tu nueva dirección…">
+                    {{-- BOTÓN AGREGAR --}}
+                    <a href="{{ route('address.index', ['redirect' => url()->current()]) }}"
+                    class="btn-secondary px-4 py-3 rounded-lg whitespace-nowrap text-sm font-semibold">
+                        + Agregar
+                    </a>
                 </div>
+
 
 
 

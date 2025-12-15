@@ -55,7 +55,7 @@
 
             <!-- FORM -->
 
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('login.post') }}" method="POST">
                 @csrf
                 <label class="block mb-2 text-gray-600 font-medium">Correo electrónico</label>
                 <input type="email" name="email" required
@@ -86,7 +86,7 @@
 
                 <p class="text-center mt-6 text-gray-600 text-sm">
                     ¿No tienes cuenta? 
-                    <a href="{{ route('registerUser') }}" class="text-brand font-medium hover:underline">Regístrate</a>
+                    <a href="{{ route('register') }}" class="text-brand font-medium hover:underline">Regístrate</a>
                 </p>
             </form>
         </div>

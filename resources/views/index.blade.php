@@ -7,8 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Little Wonders | Maternidad y Amor</title>
-
+    
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -122,7 +123,7 @@
                 </div>
 
                 <!-- Madres -->
- <div 
+<div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
                     @mouseleave="timer = setTimeout(() => open = false, 400)"
@@ -212,7 +213,7 @@
                         </div>
                     @else
                         <!-- Usuario no autenticado -->
-                        <a href="{{ route('User') }}" class="text-gray-600 hover:text-brand transition">
+                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition">
                             <i class="fa-solid fa-user text-xl"></i>
                         </a>
                     @endauth
