@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('FotosPromocionales/logo.svg') }}" type="image/x-icon">
     <title>Finalizar Pago | Little Wonders</title>
 
     <!-- Tailwind -->

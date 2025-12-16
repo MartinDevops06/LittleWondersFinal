@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('FotosPromocionales/logo.svg') }}" type="image/x-icon">
     <title>Pedido Confirmado | Little Wonders</title>
     
     <!-- Tailwind -->

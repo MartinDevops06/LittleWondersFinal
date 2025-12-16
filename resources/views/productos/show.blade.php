@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
 
     <title>{{ $producto->nombre }} | Little Wonders</title>
-    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('FotosPromocionales/logo.svg') }}" type="image/x-icon">
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- Paleta colores -->
     <style>
@@ -27,26 +30,64 @@
         <div class="container mx-auto px-4 py-4 grid grid-cols-3 items-center">
             
             <!-- Rollback -->
-            <a href="javascript:history.back()" class="text-gray-500 hover:text-brand flex items-center gap-2 justify-self-start">
+            <a href="javascript:history.back()"
+            class="text-gray-500 hover:text-brand flex items-center gap-2 justify-self-start">
                 <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
             </a>
 
-            <!-- Logo -->
-            <a href="{{ route('home') }}" class="text-2xl font-bold text-brand flex items-center gap-2 justify-self-center">
+            <!-- Logo centrado -->
+            <a href="{{ route('home') }}"
+            class="text-2xl font-bold text-brand flex items-center gap-2 justify-self-center">
                 <i class="fa-solid fa-baby-carriage"></i> Little Wonders
             </a>
 
-            <!-- Usuario -->
-            <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition flex items-center gap-2 justify-self-end">
+            <!-- Usuario a la derecha -->
+            <div class="relative justify-self-end" x-data="{ open: false }">
                 @auth
-                    <p>{{ Auth::user()->name }}</p>
+                    <button
+                        @click="open = !open"
+                        class="flex items-center gap-2 text-gray-600 hover:text-brand transition focus:outline-none"
+                    >
+                        <i class="fa-solid fa-user"></i>
+                        <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+
+                    <div 
+                        x-show="open"
+                        @click.outside="open = false"
+                        x-transition
+                        class="absolute right-0 mt-2 w-44 bg-white border rounded-lg shadow-md z-50"
+                    >
+                        <a href="{{ route('User.show', Auth::id()) }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fa-solid fa-eye mr-2"></i> Ver Perfil
+                        </a>
+
+                        <a href="{{ route('User.edit', Auth::id()) }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <i class="fa-solid fa-pen mr-2"></i> Editar datos
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
                 @else
-                    <i class="fa-solid fa-user text-xl"></i>
+                    <a href="{{ route('login') }}"
+                    class="text-gray-600 hover:text-brand transition">
+                        <i class="fa-solid fa-user text-xl"></i>
+                    </a>
                 @endauth
-            </a>
+            </div>
 
         </div>
     </nav>
+
 
 
 
@@ -57,7 +98,7 @@
                 
                 <!-- Imagen -->
                 <div class="bg-pink-50 h-96 md:h-full overflow-hidden">
-                    <img src="{{ asset('storage/ImagenesProductos/'. $producto->foto) }}" 
+                    <img src="{{ asset('ImagenesProductos/'. $producto->foto) }}" 
                         alt="{{ $producto->nombre }}" 
                         class="w-full h-full object-cover object-center">
                 </div>

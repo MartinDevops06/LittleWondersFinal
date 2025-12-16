@@ -6,10 +6,10 @@
             <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
                 
                 {{-- 1. IMAGEN DEL PRODUCTO (Añadido) --}}
-                <img src="{{ asset('storage/ImagenesProductos/' . $producto->foto) }}" 
-                     class="w-full h-56 object-cover rounded-lg" 
-                     alt="{{ $producto->nombre }}">
-
+                <img src="{{ asset('ImagenesProductos/' . $producto->foto) }}" 
+                    class="w-full h-56 object-cover rounded-lg" 
+                    alt="{{ $producto->foto }}"
+                >
                 {{-- 2. NOMBRE DEL PRODUCTO --}}
                 <h3 class="mt-4 text-lg font-semibold text-gray-700">
                     {{ $producto->nombre }}
