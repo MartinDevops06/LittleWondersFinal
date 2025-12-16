@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Little Wonders | Iniciar Sesión</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- Paleta colores-->
     <style>
-        
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
         .btn-primary { background-color: #db2777; color: rgb(255, 255, 255); }
@@ -26,12 +27,14 @@
 
         <div class="container mx-auto px-4 py-4 grid grid-cols-3 items-center">
 
+            <!-- Rollback -->
             <div class="flex">
                 <a href="javascript:history.back()" class="text-gray-500 hover:text-brand flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
                 </a>
             </div>
-
+            
+            <!-- Logo -->
             <div class="flex justify-center">
                 <a href="{{ route('home') }}" class="text-2xl font-bold text-brand flex items-center gap-2">
                     <i class="fa-solid fa-baby-carriage"></i> Little Wonders
@@ -53,8 +56,7 @@
                 <p class="text-gray-500 text-sm">Inicia sesión para continuar</p>
             </div>
 
-            <!-- FORM -->
-
+            <!-- FORM de Login -->
             <form action="{{ route('login.post') }}" method="POST">
                 @csrf
                 <label class="block mb-2 text-gray-600 font-medium">Correo electrónico</label>
@@ -73,17 +75,11 @@
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
 
-
-                <div class="flex justify-between items-center text-sm mb-4">
-                    <label class="flex items-center gap-2 text-gray-600">
-                    </label>
-                    <a href="#" class="text-brand hover:underline">¿Olvidaste tu contraseña?</a>
-                </div>
-
                 <button type="submit" class="w-full btn-primary py-2 rounded-full text-lg">
                     Iniciar sesión
                 </button>
 
+                <!-- Redireccionamiento a registrar usuario -->
                 <p class="text-center mt-6 text-gray-600 text-sm">
                     ¿No tienes cuenta? 
                     <a href="{{ route('register') }}" class="text-brand font-medium hover:underline">Regístrate</a>

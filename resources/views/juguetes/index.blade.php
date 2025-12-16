@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Bebés | Little Wonders</title>
 
     <!-- Tailwind -->
@@ -17,6 +18,7 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Paleta colores -->
     <style>
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
@@ -41,9 +43,10 @@
             <div class="hidden md:flex flex-1 mx-10">
                 <form action="{{ route('productos.index') }}" method="GET" class="w-full relative">
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Buscar ropita, accesorios..." 
-                           class="w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-pink-400 bg-gray-50">
-                    <button type="submit" class="absolute right-3 top-2.5 text-gray-400 hover:text-pink-500">
+                        placeholder="Buscar ropita, accesorios..." 
+                    class="w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-pink-400 bg-gray-50">
+                    
+                            <button type="submit" class="absolute right-3 top-2.5 text-gray-400 hover:text-pink-500">
                         <i class="fa-solid fa-search"></i>
                     </button>
                 </form>
@@ -122,7 +125,7 @@
                 </div>
 
                 <!-- Madres -->
- <div 
+                <div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
                     @mouseleave="timer = setTimeout(() => open = false, 400)"
@@ -233,36 +236,36 @@
     </section>
 
     <!-- CONTENIDO -->
-<main class="container mx-auto px-6 py-10">
+    <main class="container mx-auto px-6 py-10">
 
-    <!-- ========================== -->
-    <!-- 🔹 ESTIMULACIÓN -->
-    <!-- ========================== -->
-    <section id="estimulación" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Estimulación</h2>
+        <!-- ========================== -->
+        <!-- 🔹 ESTIMULACIÓN -->
+        <!-- ========================== -->
+        <section id="estimulación" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Estimulación</h2>
 
-        @include('juguetes.secciones.estimulacion', ['productos' => $estimulacion])
-    </section>
+            @include('juguetes.secciones.estimulacion', ['productos' => $estimulacion])
+        </section>
 
-    <!-- ========================== -->
-    <!-- 🔹 PELUCHES -->
-    <!-- ========================== -->
-    <section id="motricidad" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Motricidad</h2>
+        <!-- ========================== -->
+        <!-- 🔹 PELUCHES -->
+        <!-- ========================== -->
+        <section id="motricidad" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Motricidad</h2>
 
-        @include('juguetes.secciones.motricidad', ['productos' => $motricidad])
-    </section>
+            @include('juguetes.secciones.motricidad', ['productos' => $motricidad])
+        </section>
 
-    <!-- ========================== -->
-    <!-- 🔹 SENSORIALES -->
-    <!-- ========================== -->
-    <section id="entretenimiento" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Entretenimiento</h2>
+        <!-- ========================== -->
+        <!-- 🔹 SENSORIALES -->
+        <!-- ========================== -->
+        <section id="entretenimiento" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Entretenimiento</h2>
 
-        @include('juguetes.secciones.entretenimiento', ['productos' => $entretenimiento])
-    </section>
+            @include('juguetes.secciones.entretenimiento', ['productos' => $entretenimiento])
+        </section>
 
-</main>
+    </main>
 
     <footer class="bg-white border-t mt-12 py-8 text-center text-gray-500 text-sm">
         <p>&copy; {{ date('Y') }} Little Wonders. Hecho con amor.</p>

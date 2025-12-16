@@ -37,6 +37,7 @@ class CarritoController extends Controller
      */
     public function agregar(Request $request, $idProducto)
     {
+        
         // 1. Busca el producto en la base de datos
         $producto = Producto::findOrFail($idProducto);
 
@@ -68,26 +69,28 @@ class CarritoController extends Controller
     /**
      * Actualiza la cantidad de un producto en el carrito.
      */
-    public function actualizar(Request $request, $idProducto)
+    public function actualizar(Request $request, $id)
     {
-        $request->validate([
-            'cantidad' => 'required|integer|min:1'
-        ]);
+        $carrito = session('carrito', []);
 
-        $carrito = Session::get('carrito', []);
-
-        if (!isset($carrito[$idProducto])) {
-            return response()->json([
-                'error' => 'El producto no está en el carrito.'
-            ], 404);
+        if (!isset($carrito[$id])) {
+            return response()->json(['error' => 'Producto no existe'], 404);
         }
 
-        $carrito[$idProducto]['cantidad'] = $request->cantidad;
-        Session::put('carrito', $carrito);
+        $cantidad = max(1, (int) $request->cantidad);
+        $carrito[$id]['cantidad'] = $cantidad;
+
+        session(['carrito' => $carrito]);
+
+        // Recalcular subtotal real (backend)
+        $subtotal = 0;
+        foreach ($carrito as $item) {
+            $subtotal += $item['precio'] * $item['cantidad'];
+        }
 
         return response()->json([
-            'mensaje' => 'Cantidad actualizada.',
-            'subtotal' => $this->calcularSubtotal($carrito)
+            'ok' => true,
+            'subtotal' => $subtotal
         ]);
     }
 
@@ -97,24 +100,29 @@ class CarritoController extends Controller
      */
     public function eliminar($idProducto)
     {
+        // Recuperar el carrito de la sesión.
         $carrito = Session::get('carrito', []);
 
+        // Verificar si el producto existe antes de intentar eliminarlo.
         if (isset($carrito[$idProducto])) {
-            unset($carrito[$idProducto]);
-            Session::put('carrito', $carrito);
+            unset($carrito[$idProducto]); // Eliminar el producto del array.
+            Session::put('carrito', $carrito); // Guardar el carrito actualizado en la sesión.
         }
 
+        // Devolver una respuesta JSON con el mensaje y el subtotal actualizado.
         return response()->json([
-            'mensaje' => 'Producto eliminado.',
-            'subtotal' => $this->calcularSubtotal($carrito)
+            'mensaje' => 'Producto eliminado del carrito.',
+            'subtotal' => $this->calcularSubtotal($carrito) // Asegúrate de que este método exista
         ]);
     }
 
 
-    private function calcularSubtotal($carrito)
+    private function calcularSubtotal(array $carrito): int
     {
-        return collect($carrito)->sum(function ($item) {
-            return $item['precio'] * $item['cantidad'];
-        });
+        $subtotal = 0;
+        foreach ($carrito as $item) {
+            $subtotal += $item['precio'] * $item['cantidad'];
+        }
+        return $subtotal;
     }
 }

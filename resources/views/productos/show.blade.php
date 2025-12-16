@@ -1,14 +1,18 @@
-@php
-    $user = Auth::user();
-@endphp
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+
     <title>{{ $producto->nombre }} | Little Wonders</title>
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Paleta colores -->
     <style>
         .text-brand { color: #db2777; }
         .bg-brand { background-color: #db2777; }
@@ -16,17 +20,24 @@
         .btn-primary:hover { background-color: #be185d; }
     </style>
 </head>
+
 <body class="bg-gray-50 font-sans">
 
-    <nav class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 grid grid-cols-3 items-center">
             
-            <a href="javascript:history.back()" class="text-gray-500 hover:text-brand flex items-center gap-2">
+            <!-- Rollback -->
+            <a href="javascript:history.back()" class="text-gray-500 hover:text-brand flex items-center gap-2 justify-self-start">
                 <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
             </a>
 
-            <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition flex items-center gap-2">
+            <!-- Logo -->
+            <a href="{{ route('home') }}" class="text-2xl font-bold text-brand flex items-center gap-2 justify-self-center">
+                <i class="fa-solid fa-baby-carriage"></i> Little Wonders
+            </a>
+
+            <!-- Usuario -->
+            <a href="{{ route('login') }}" class="text-gray-600 hover:text-brand transition flex items-center gap-2 justify-self-end">
                 @auth
                     <p>{{ Auth::user()->name }}</p>
                 @else
@@ -38,29 +49,35 @@
     </nav>
 
 
+
+    <!-- Producto -->
     <main class="container mx-auto px-4 py-10">
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="grid grid-cols-1 md:grid-cols-2">
                 
+                <!-- Imagen -->
                 <div class="bg-pink-50 h-96 md:h-full overflow-hidden">
                     <img src="{{ asset('storage/ImagenesProductos/'. $producto->foto) }}" 
                         alt="{{ $producto->nombre }}" 
                         class="w-full h-full object-cover object-center">
                 </div>
 
-
+                <!-- Nombre -->
                 <div class="p-8 md:p-12 flex flex-col justify-center">
                     <span class="text-pink-500 font-semibold tracking-wider text-sm uppercase mb-2">Maternidad</span>
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $producto->nombre }}</h1>
                     
+                    <!-- Precio -->
                     <div class="text-3xl font-bold text-gray-900 mb-6">
                         ${{ number_format($producto->precio, 0, ',', '.') }}
                     </div>
-
+                    
+                    <!-- Descripcion -->
                     <p class="text-gray-600 leading-relaxed mb-8">
                         {{ $producto->descripcion }}
                     </p>
 
+                    <!-- Stock -->
                     <div class="border-t border-b border-gray-100 py-4 mb-8">
                         <div class="flex items-center gap-4">
                             <span class="text-gray-500">Disponibilidad:</span>
@@ -93,9 +110,8 @@
                         </div>
                     </div>
 
+                    <!-- Formulario "Agregar carrito" -->
                     <div class="flex flex-col sm:flex-row gap-4">
-    
-                        {{-- 🛑 ESTE FORMULARIO ES VITAL 🛑 --}}
                         <form action="{{ route('carrito.agregar', $producto->id) }}" method="POST" class="flex-1">
                             @csrf
                             
@@ -104,13 +120,9 @@
                                 <i class="fa-solid fa-cart-plus"></i> Agregar al Carrito
                             </button>
                         </form>
-                        
-                        {{-- Botón Comprar Ahora (sin cambios) --}}
-                        <button class="flex-1 btn-primary py-3 rounded-lg font-semibold shadow-lg shadow-pink-200 flex items-center justify-center gap-2">
-                            Comprar Ahora
-                        </button>
                     </div>
 
+                    <!-- Detalles de Servicio -->
                     <div class="mt-6 text-xs text-gray-400 text-center flex items-center justify-center gap-4">
                         <span><i class="fa-solid fa-shield-halved"></i> Compra Segura</span>
                         <span><i class="fa-solid fa-truck"></i> Envío Rápido</span>
@@ -119,6 +131,7 @@
             </div>
         </div>
 
+        <!-- Productos relacionados -->
         @if($relacionados->count() > 0)
         <div class="mt-16">
             <h3 class="text-2xl font-bold text-gray-800 mb-6">También te podría gustar</h3>

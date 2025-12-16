@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Little Wonders | Mi Perfil</title>
 
     <script src="https://cdn.tailwindcss.com"></script>

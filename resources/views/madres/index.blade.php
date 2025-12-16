@@ -6,7 +6,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
+
     <title>Bebés | Little Wonders</title>
 
     <!-- Tailwind -->
@@ -18,6 +21,7 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Paleta colores -->
     <style>
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
@@ -89,12 +93,7 @@
                 </div>
 
                 <!-- Juguetes -->
-                <div 
-                    x-data="{ open:false, timer:null }"
-                    @mouseenter="clearTimeout(timer); open = true"
-                    @mouseleave="timer = setTimeout(() => open = false, 400)"
-                    class="relative"
-                >
+                <div x-data="{ open:false, timer:null }" @mouseenter="clearTimeout(timer); open = true" @mouseleave="timer = setTimeout(() => open = false, 400)" class="relative">
                     <a href="{{ route('juguetes.index') }}" 
                     class="text-gray-600 hover:text-brand text-sm font-medium">
                         Juguetes
@@ -123,7 +122,7 @@
                 </div>
 
                 <!-- Madres -->
- <div 
+                <div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
                     @mouseleave="timer = setTimeout(() => open = false, 400)"
@@ -234,36 +233,36 @@
     </section>
 
     <!-- CONTENIDO -->
-<main class="container mx-auto px-6 py-10">
+    <main class="container mx-auto px-6 py-10">
 
-    <!-- ========================== -->
-    <!-- 🔹 CONFORT -->
-    <!-- ========================== -->
-    <section id="confort" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Confort</h2>
+        <!-- ========================== -->
+        <!-- 🔹 CONFORT -->
+        <!-- ========================== -->
+        <section id="confort" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Confort</h2>
 
-        @include('madres.secciones.confort', ['productos' => $confort])
-    </section>
+            @include('madres.secciones.confort', ['productos' => $confort])
+        </section>
 
-    <!-- ========================== -->
-    <!-- 🔹 SALUD -->
-    <!-- ========================== -->
-    <section id="salud" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Salud</h2>
+        <!-- ========================== -->
+        <!-- 🔹 SALUD -->
+        <!-- ========================== -->
+        <section id="salud" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Salud</h2>
 
-        @include('madres.secciones.salud', ['productos' => $salud])
-    </section>
+            @include('madres.secciones.salud', ['productos' => $salud])
+        </section>
 
-    <!-- ========================== -->
-    <!-- 🔹 Vestimenta -->
-    <!-- ========================== -->
-    <section id="vestimenta" class="py-12 scroll-mt-24">
-        <h2 class="text-3xl font-bold text-gray-800 mb-6">Vestimenta</h2>
+        <!-- ========================== -->
+        <!-- 🔹 Vestimenta -->
+        <!-- ========================== -->
+        <section id="vestimenta" class="py-12 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Vestimenta</h2>
 
-        @include('madres.secciones.vestimenta', ['productos' => $vestimenta])
-    </section>
+            @include('madres.secciones.vestimenta', ['productos' => $vestimenta])
+        </section>
 
-</main>
+    </main>
 
     <footer class="bg-white border-t mt-12 py-8 text-center text-gray-500 text-sm">
         <p>&copy; {{ date('Y') }} Little Wonders. Hecho con amor.</p>

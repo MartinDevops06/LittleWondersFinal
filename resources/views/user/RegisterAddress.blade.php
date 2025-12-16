@@ -7,12 +7,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Little Wonders | Registro</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Paleta colores -->
     <style>
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
@@ -25,20 +29,23 @@
 
     <!-- NAVBAR -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
-
         <div class="container mx-auto px-4 py-4 grid grid-cols-3 items-center">
+
+            <!-- Rollback -->
             <div class="flex">
                 <a href="javascript:history.back()" class="text-gray-500 hover:text-brand flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Volver a la tienda
                 </a>
             </div>
 
+            <!-- LOGO -->
             <div class="flex justify-center">
                 <a href="{{ route('home') }}" class="text-2xl font-bold text-brand flex items-center gap-2">
                     <i class="fa-solid fa-baby-carriage"></i> Little Wonders
                 </a>
             </div>
 
+            <!-- Usuario -->
             @auth
                 <a href="{{ route('User.show') }}" class="text-gray-600 hover:text-brand transition">
                     <p>{{ Auth::user()->name }}</p>

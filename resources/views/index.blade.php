@@ -10,15 +10,16 @@
     <link rel="icon" href="{{ asset('storage/logo.svg') }}" type="image/x-icon">
     <title>Little Wonders | Maternidad y Amor</title>
     
-    <!-- Tailwind CDN -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Alpine.js (NECESARIO PARA LOS DROPDOWNS) -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Paleta de colores -->
     <style>
         .bg-brand { background-color: #fce7f3; }
         .text-brand { color: #db2777; }
@@ -42,8 +43,9 @@
             <div class="hidden md:flex flex-1 mx-10">
                 <form action="{{ route('productos.index') }}" method="GET" class="w-full relative">
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Buscar ropita, accesorios..." 
-                           class="w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-pink-400 bg-gray-50">
+                        placeholder="Buscar ropita, accesorios..."
+                    class="w-full pl-4 pr-10 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-pink-400 bg-gray-50">
+            
                     <button type="submit" class="absolute right-3 top-2.5 text-gray-400 hover:text-pink-500">
                         <i class="fa-solid fa-search"></i>
                     </button>
@@ -69,11 +71,7 @@
                         Bebés
                     </a>
 
-                    <div 
-                        x-show="open"
-                        x-transition
-                        class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50"
-                    >
+                    <div x-show="open" x-transition class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50">
                         <a href="{{ route('bebes.index') }}#ropa-bebe" class="block px-4 py-2 hover:bg-gray-100">
                             Ropa Bebé
                         </a>
@@ -100,13 +98,8 @@
                         Juguetes
                     </a>
 
-                    <div 
-                        x-show="open"
-                        x-transition
-                        class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50"
-                    >
-                        <a href="{{ route('juguetes.index') }}#estimulación" 
-                        class="block px-4 py-2 hover:bg-gray-100">
+                    <div x-show="open" x-transition class="absolute bg-white shadow-md rounded-lg mt-2 w-40 py-2 z-50">
+                        <a href="{{ route('juguetes.index') }}#estimulación" class="block px-4 py-2 hover:bg-gray-100">
                             Estimulación
                         </a>
 
@@ -123,7 +116,7 @@
                 </div>
 
                 <!-- Madres -->
-<div 
+                <div 
                     x-data="{ open:false, timer:null }"
                     @mouseenter="clearTimeout(timer); open = true"
                     @mouseleave="timer = setTimeout(() => open = false, 400)"

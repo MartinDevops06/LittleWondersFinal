@@ -22,18 +22,19 @@ class CheckoutController extends Controller
             $subtotal += $item['precio'] * $item['cantidad'];
         }
 
-        // ✅ TODAS las direcciones del usuario
         $direcciones = auth()->user()->addresses()->get();
 
-        return view('checkoutPay.index', compact(
+        return view('CheckoutPay.index', compact(
             'direcciones',
             'carrito',
             'subtotal'
         ));
     }
 
+
     public function store(Request $request)
     {
+        
         $request->validate([
             'direccion_select' => 'required',
             'telefono'         => 'required',
